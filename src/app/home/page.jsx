@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import Dialog from "@/components/dialog";
 import { v4 as uuidv4 } from "uuid";
+import Link from "next/link";
 
 export default function Home() {
   const [state, setState] = useState("Not Started");
@@ -102,7 +103,19 @@ export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
       <div className="z-10 flex-col max-w-5xl w-full items-center p-4 font-mono text-sm flex">
-        <p className="text-2xl font-bold">MILKING TRACKER</p>
+        <div className="w-dvw flex flex-row justify-between items-center -my-4 bg-green-600">
+          <p className="m-4 text-lg text-white font-bold">MILKING TRACKER</p>
+          <Link
+            className={
+              state === "Not Started"
+                ? "p-2 border-2 rounded-lg m-4 flex bg-white"
+                : "pointer-events-none right-2 p-2 border-2 rounded-lg m-4 flex bg-white"
+            }
+            href={"/history"}
+          >
+            Milking History
+          </Link>
+        </div>
         <div className="min-h-64">
           <p className="text-6xl font-bold py-20">
             {hr < 10 ? "0" + hr : hr}:{mn < 10 ? "0" + mn : mn}:
