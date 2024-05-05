@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Dialog from "@/components/dialog";
+import { v4 as uuidv4 } from "uuid";
 
 export default function Home() {
   const [state, setState] = useState("Not Started");
@@ -13,6 +14,7 @@ export default function Home() {
   const [audio, setAudio] = useState(null);
   const [modal, setModal] = useState(false);
   const [quantity, setQuantity] = useState(0);
+  const [startTime, setStartTime] = useState();
 
   let URLs = [
     "./audio/a.mp3",
@@ -25,6 +27,10 @@ export default function Home() {
   function startMilking() {
     setState("Started");
     setFlag(true);
+    if (startTime == null) {
+      setStartTime(new Date().toLocaleTimeString());
+      audio.currentTime = 0;
+    }
     audio.play();
     audio.loop = true;
   }
@@ -39,10 +45,6 @@ export default function Home() {
     audio.pause();
     setModal(true);
     setFlag(false);
-    setState("Not Started");
-    setSc(0);
-    setMn(0);
-    setHr(0);
   }
 
   function startTimer() {
@@ -60,6 +62,23 @@ export default function Home() {
 
   function closeModal() {
     if (quantity === 0) return;
+    if (startTime != null) {
+      let sessions = [];
+      let oldSessions = JSON.parse(localStorage.getItem("sessions"));
+      if (oldSessions != null) {
+        sessions.push(...oldSessions);
+      }
+      let data = {
+        id: uuidv4(),
+        date: new Date().toLocaleDateString(),
+        startTime: startTime,
+        endTime: new Date().toLocaleTimeString(),
+        duration: hr + ":" + mn + ":" + sc,
+        quantity: quantity,
+      };
+      sessions.push(data);
+      localStorage.setItem("sessions", JSON.stringify(sessions));
+    }
     setState("Not Started");
     setSc(0);
     setMn(0);
@@ -77,8 +96,8 @@ export default function Home() {
   }, [flag, sc, mn, hr]);
 
   useEffect(() => {
-    setAudio(new Audio(URL));
-  }, []);
+    !modal && setAudio(new Audio(URL));
+  }, [modal]);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
