@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Dialog from "@/components/dialog";
+
 export default function Home() {
   const [state, setState] = useState("Not Started");
   const [flag, setFlag] = useState(false);
@@ -9,6 +11,8 @@ export default function Home() {
   const [mn, setMn] = useState(0);
   const [hr, setHr] = useState(0);
   const [audio, setAudio] = useState(null);
+  const [modal, setModal] = useState(false);
+  const [quantity, setQuantity] = useState(0);
 
   let URLs = [
     "./audio/a.mp3",
@@ -33,6 +37,7 @@ export default function Home() {
 
   function stopMilking() {
     audio.pause();
+    setModal(true);
     setFlag(false);
     setState("Not Started");
     setSc(0);
@@ -51,6 +56,16 @@ export default function Home() {
       setMn(0);
       setSc(0);
     }
+  }
+
+  function closeModal() {
+    if (quantity === 0) return;
+    setState("Not Started");
+    setSc(0);
+    setMn(0);
+    setHr(0);
+    setQuantity(0);
+    setModal(false);
   }
 
   useEffect(() => {
@@ -106,6 +121,11 @@ export default function Home() {
             Stop Milking
           </button>
         )}
+        <Dialog
+          open={modal}
+          onClose={closeModal}
+          onChange={(e) => setQuantity(e.target.value)}
+        />
       </div>
     </main>
   );
