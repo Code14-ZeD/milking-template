@@ -8,18 +8,31 @@ export default function Home() {
   const [sc, setSc] = useState(0);
   const [mn, setMn] = useState(0);
   const [hr, setHr] = useState(0);
+  const [audio, setAudio] = useState(null);
+
+  let URLs = [
+    "./audio/a.mp3",
+    "./audio/b.mp3",
+    "./audio/c.mp3",
+    "./audio/d.mp3",
+  ];
+  let URL = URLs[Math.floor(Math.random() * URLs.length)];
 
   function startMilking() {
     setState("Started");
     setFlag(true);
+    audio.play();
+    audio.loop = true;
   }
 
   function pauseMilking() {
     setState("Paused");
     setFlag(false);
+    audio.pause();
   }
 
   function stopMilking() {
+    audio.pause();
     setFlag(false);
     setState("Not Started");
     setSc(0);
@@ -47,6 +60,10 @@ export default function Home() {
     }
     return () => clearInterval(interval);
   }, [flag, sc, mn, hr]);
+
+  useEffect(() => {
+    setAudio(new Audio(URL));
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
