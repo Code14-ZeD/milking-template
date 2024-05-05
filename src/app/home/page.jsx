@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Dialog from "@/components/dialog";
 import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
+import Wave from "react-wavify";
 
 export default function Home() {
   const [state, setState] = useState("Not Started");
@@ -104,7 +105,16 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-between">
       <div className="z-10 flex-col max-w-5xl w-full items-center p-4 font-mono text-sm flex">
         <div className="w-dvw flex flex-row justify-between items-center -my-4 bg-green-600">
-          <p className="m-4 text-lg text-white font-bold">MILKING TRACKER</p>
+          <div className="flex flex-row items-center">
+            <Image
+              className="m-1"
+              src="/cow-face.svg"
+              width={50}
+              height={50}
+              alt="cow-face"
+            />
+            <p className="my-4 text-lg text-white font-bold">MILKING TRACKER</p>
+          </div>
           <Link
             className={
               state === "Not Started"
@@ -145,7 +155,7 @@ export default function Home() {
             ? "Resume Milking"
             : "Pause Milking"}
         </button>
-        {flag && (
+        {state !== "Not Started" && (
           <button
             className="px-5 py-2 border-2 rounded-lg"
             onClick={stopMilking}
@@ -159,6 +169,17 @@ export default function Home() {
           onChange={(e) => setQuantity(e.target.value)}
         />
       </div>
+      <Wave
+        fill="#fffdd0"
+        paused={!flag}
+        style={{ display: "flex", height: "25vh" }}
+        options={{
+          height: 50,
+          amplitude: 15,
+          speed: 0.3,
+          points: 5,
+        }}
+      />
     </main>
   );
 }
