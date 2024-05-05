@@ -1,4 +1,4 @@
-Milking Tracker with Music is an application that helps dairy farmers track their milking sessions while incorporating music to enhance cattle yiel. This application have a straightforward interface for easy to use by dairy farmers.
+Milking Tracker with Music is an application that helps dairy farmers track their milking sessions while incorporating music to enhance cattle yield. This application have a straightforward interface for easy to use by dairy farmers.
 
 ## Installation
 
@@ -22,24 +22,12 @@ After installation install dependencies
 
 ```bash
 npm install
-# or
-yarn install
-# or
-pnpm install
-# or
-bun install
 ```
 
 After installation build the application
 
 ```bash
 npm run build
-# or
-yarn build
-# or
-pnpm build
-# or
-bun build
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
