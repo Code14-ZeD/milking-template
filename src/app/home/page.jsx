@@ -166,7 +166,7 @@ export default function Home() {
         <Dialog
           open={modal}
           onClose={closeModal}
-          onChange={(e) => setQuantity(e.target.value)}
+          onChange={(e) => setQuantity(Math.abs(e.target.value))}
         />
       </div>
       <Wave
