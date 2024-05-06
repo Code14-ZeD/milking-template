@@ -13,6 +13,10 @@ export default function Dialog({ open, onClose, onChange }) {
           <AlertDialogTitle>Quantity(litres)</AlertDialogTitle>
           <input
             className="flex flex-col border-2 rounded-lg m-2 p-2 bg-inherit"
+            min="0"
+            onKeyPress={(event) => {
+              if (event.nativeEvent.keyCode === 45) event.preventDefault();
+            }}
             type="number"
             id="quantity"
             name="quantity"
